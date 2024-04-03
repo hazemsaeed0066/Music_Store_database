@@ -1,0 +1,71 @@
+--Basic Retrieve for all tables :
+SELECT * FROM album;
+SELECT * FROM artist;
+SELECT * FROM customer;
+SELECT * FROM employee;
+SELECT * FROM genre;
+SELECT * FROM invoice;
+SELECT * FROM invoice_line;
+SELECT * FROM media_type;
+SELECT * FROM playlist;
+SELECT * FROM playlist_track;
+SELECT * FROM track;
+
+--Filtering and Sorting:
+
+(--Retrieve artists by their name or a part of their name(start with A))
+select * from artist
+where name like 'A%';
+
+(--Retrieve customers by their country or city.(customer from USA))
+select * from customer
+where country = 'USA';
+
+(--Retrieve employees by their job title or department.(employee end with manger))
+select * from employee
+where title like '%Manager';
+
+(--Retrieve invoices within a certain date range.)
+select * from invoice
+where invoice_date between '2017-01-01' and '2017-01-31'
+
+--Aggregate Functions:
+
+(--Calculate the total number of albums in the database.)
+select count(*)as count_of_album from album ;
+
+(--Calculate the total number of tracks in the database.)
+select count(*)as count_of_track from track ;
+
+(--Calculate the total revenue from all invoices and average.)
+select sum(total)as total_revenue from invoice;
+select avg(total)as Avg_revenue from invoice;
+
+(--Find the maximum and minimum invoice totals.)
+select max(total) as max_total,min(total)as min_total from invoice;
+
+--Joins:
+
+(--Retrieve albums along with their corresponding artists.)
+select * from album 
+join artist 
+using(artist_id);
+
+(--Retrieve tracks along with their corresponding albums and genres.)
+select * from track t 
+join genre g
+using(genre_id)
+join album a
+using(album_id)
+
+(--Retrieve invoices along with their corresponding customers.)
+select * from invoice i
+join customer c
+on i.customer_id=c.customer_id
+
+(--Retrieve invoice line items along with their corresponding tracks and invoices.)
+select * from invoice_line i
+join track t
+on i.track_id=t.track_id
+join invoice i1
+on i.invoice_id=i1.invoice_id
